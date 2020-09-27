@@ -2,18 +2,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   min-width: 200px;
   height: 100%;
   background: #00000011;
 }
 
-.list {
+ul {
   padding: 0;
   margin: 0;
 }
 
-.cell {
+li {
   display: block;
+}
+
+.cell {
   width: 100px;
   height: 100px;
   margin-bottom: 50px;
@@ -36,4 +40,12 @@
 
 .circle {
   border-radius: 50%;
+}
+
+.controls {
+  display: flex;
+  .clear_button {
+    width: 30px;
+    height: 30px;
+  }
 }

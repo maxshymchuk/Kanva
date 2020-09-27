@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import styles from './field.module.scss';
 import {useDispatch, useSelector} from "react-redux";
 import {Figure, FigureType} from "../../types";
-import {addFigure, AppState} from "../../store/actionCreators";
+import {addFigure, AppState, removeFigure} from "../../store/actionCreators";
 import uniqid from 'uniqid';
 import {CONSTS} from "../../consts";
 import randomcolor from 'randomcolor';
@@ -45,7 +45,8 @@ const Field = () => {
                         y: e.clientY - delta.y
                     },
                     layer: getMaxLayer(figures),
-                    color: randomcolor()
+                    color: randomcolor(),
+                    isActive: false
                 }));
             }
             target.style.zIndex = `${CONSTS.DEFAULT_LAYER}`;
@@ -73,9 +74,19 @@ const Field = () => {
         }
     }
 
+    const handleClear = () => {
+        const result = window.confirm('Are you sure?');
+        if (result) {
+            const list = [...figures];
+            for (let item of list) {
+                dispatch(removeFigure(item.id));
+            }
+        }
+    }
+
     return (
         <section className={styles.field}>
-            <ul className={styles.list}>
+            <ul>
                 <li className={styles.cell}>
                     <div className={classnames(styles.item, styles.square, styles.hidden)}></div>
                     <div
@@ -87,6 +98,18 @@ const Field = () => {
                     <div
                         onMouseDown={(e) => handleMouseDown(e, FigureType.Circle)}
                         className={classnames(styles.item, styles.circle)}></div>
+                </li>
+            </ul>
+            <ul className={styles.controls}>
+                <li className={styles.clear_button} onClick={handleClear}>
+                    <svg id="clear_img" enableBackground="new 0 0 413.348 413.348" height="30" viewBox="0 0 413.348 413.348" width="30" xmlns="http://www.w3.org/2000/svg">
+                        <path d="m413.348 24.354-24.354-24.354-182.32 182.32-182.32-182.32-24.354 24.354 182.32 182.32-182.32 182.32 24.354 24.354 182.32-182.32 182.32 182.32 24.354-24.354-182.32-182.32z"/>
+                    </svg>
+                </li>
+                <li className={styles.save_button}>
+                    <svg height="30" viewBox="0 0 512 512" width="30" xmlns="http://www.w3.org/2000/svg">
+                        <path d="m409.785156 278.5-153.785156 153.785156-153.785156-153.785156 28.285156-28.285156 105.5 105.5v-355.714844h40v355.714844l105.5-105.5zm102.214844 193.5h-512v40h512zm0 0"/>
+                    </svg>
                 </li>
             </ul>
         </section>

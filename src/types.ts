@@ -11,7 +11,8 @@ export type Figure = {
         x: number,
         y: number
     },
-    color: string
+    color: string,
+    isActive: boolean
 }
 
 export enum ActionTypes {
@@ -20,13 +21,7 @@ export enum ActionTypes {
     CHANGE_FIGURE
 }
 
-export type FigureState = {
-    figures: Figure[]
-}
-
 export type FigureAction = {
     type: ActionTypes
     figure: Figure
 }
-
-export type DispatchType = (args: FigureAction) => FigureAction

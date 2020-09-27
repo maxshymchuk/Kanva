@@ -8,3 +8,7 @@ export const getMaxLayer = (figures: Figure[]) => {
 export const findFigure = (figures: Figure[], id: string) => {
     return figures.filter(figure => figure.id === id)[0];
 }
+
+export const getActive = (figures: Figure[]) => {
+    return figures.filter(figure => figure.isActive === true)[0];
+}

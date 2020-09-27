@@ -5,7 +5,7 @@ import {Figure, FigureType} from "../../types";
 import {AppState, changeFigure, removeFigure} from "../../store/actionCreators";
 import classnames from 'classnames';
 import {CONSTS} from "../../consts";
-import {findFigure, getMaxLayer} from "../../utils";
+import {findFigure, getActive, getMaxLayer} from "../../utils";
 
 const Canvas = () => {
 
@@ -24,19 +24,25 @@ const Canvas = () => {
         (state: AppState) => state.figures
     );
 
-    // const [elements, setElements] = useState<HTMLDivElement[]>([]);
-
-    const [currentItem, setCurrentItem] = useState<HTMLDivElement | undefined>();
     const [items, setItems] = useState<JSX.Element[]>([]);
 
+    const handleDelete = (e: KeyboardEvent) => {
+        if (e.key === 'Delete') {
+            const figure = getActive(figures);
+            figure && dispatch(removeFigure(figure.id));
+        }
+    }
+
     useEffect(() => {
+        document.addEventListener('keydown', handleDelete, false);
         setItems(figures.map((figure) => {
             const type = figure.type === FigureType.Square ? 'square' : 'circle';
             const style = {
                 left: figure.position.x - CONSTS.MENU_WIDTH,
                 top: figure.position.y,
                 zIndex: figure.layer,
-                backgroundColor: figure.color
+                backgroundColor: figure.color,
+                border: figure.isActive ? CONSTS.ACTIVE_BORDER : 'none'
             }
             return (
                 <div
@@ -49,21 +55,23 @@ const Canvas = () => {
                 </div>
             )
         }));
-
+        return () => document.removeEventListener('keydown',  handleDelete, false);
     }, [figures])
 
-    useEffect(() => {
-        console.log('effe')
-        if (currentItem) currentItem.style.border = CONSTS.ACTIVE_BORDER;
-    }, [currentItem])
+    const unfocusAll = () => {
+        const list = [...figures];
+        for (let item of list) {
+            item.isActive = false;
+            dispatch(changeFigure(item));
+        }
+    }
 
     const handleClick = (e: React.MouseEvent) => {
         const item = e.target as HTMLDivElement;
+        const figure = findFigure(figures, item.id);
+        figure.isActive = true;
+        dispatch(changeFigure(figure));
     };
-
-    const unfocusAll = () => {
-        setCurrentItem(undefined);
-    }
 
     const handleMouseMove = (e: MouseEvent) => {
         e.preventDefault();
@@ -95,6 +103,8 @@ const Canvas = () => {
     }
 
     const handleMouseDown = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        unfocusAll();
         window.addEventListener('mousemove', handleMouseMove);
         window.addEventListener('mouseup', handleMouseUp);
         const item = e.target as HTMLDivElement;
@@ -107,6 +117,7 @@ const Canvas = () => {
             tempIndex = getMaxLayer(figures);
             const figure = findFigure(figures, item.id);
             figure.layer = tempIndex;
+            figure.isActive = true;
             dispatch(changeFigure(figure));
             item.style.zIndex = `${CONSTS.UPPER_LAYER}`;
             if (!target) target = item;
