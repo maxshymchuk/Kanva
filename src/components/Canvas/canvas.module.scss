@@ -1,0 +1,16 @@
+.canvas {
+  width: 100%;
+  background-color: azure;
+  position: relative;
+}
+
+.item {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+}
+
+.circle {
+  border-radius: 50%;
+}
+

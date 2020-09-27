@@ -1,0 +1,38 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 200px;
+  height: 100%;
+  background: #00000011;
+}
+
+.list {
+  padding: 0;
+  margin: 0;
+}
+
+.cell {
+  display: block;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 50px;
+}
+
+.item {
+  display: block;
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  line-height: 100px;
+  background: red;
+  position: relative;
+  &.hidden {
+    position: absolute;
+    background: green;
+  }
+}
+
+.circle {
+  border-radius: 50%;
+}
