@@ -68,17 +68,21 @@ const Canvas = () => {
             const addHeight = target.offsetHeight;
             target.style.left = `${e.clientX - delta.x - CONSTS.MENU_WIDTH}px`;
             target.style.top = `${e.clientY - delta.y}px`;
-            if (target.offsetLeft < 0) target.style.left = '0';
-            if (target.offsetTop < 0) target.style.top = '0';
-            if (target.offsetLeft > window.innerWidth - addWidth) target.style.left = `${window.innerWidth - addWidth}px`;
-            if (target.offsetTop > window.innerHeight - addHeight) target.style.top = `${window.innerHeight - addHeight}px`;
+            if (e.clientX >= CONSTS.MENU_WIDTH && e.clientX <= window.innerWidth
+                && e.clientY >= 0 && e.clientY <= window.innerHeight) {
+                if (target.offsetLeft < 0) target.style.left = '0';
+                if (target.offsetTop < 0) target.style.top = '0';
+                if (target.offsetLeft > window.innerWidth - addWidth) target.style.left = `${window.innerWidth - addWidth}px`;
+                if (target.offsetTop > window.innerHeight - addHeight) target.style.top = `${window.innerHeight - addHeight}px`;
+            }
         }
     }
 
     const handleMouseUp = (e: MouseEvent) => {
         window.removeEventListener('mousemove', handleMouseMove);
         window.removeEventListener('mouseup', handleMouseUp);
-        if (target && target.offsetLeft < -target.offsetWidth) {
+        if (target && (e.clientX < CONSTS.MENU_WIDTH || e.clientX > window.innerWidth
+            || e.clientY < 0 || e.clientY > window.innerHeight)) {
             dispatch(removeFigure(target.id));
         }
         target = null;

@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import styles from './field.module.scss';
 import {useDispatch} from "react-redux";
 import {FigureType} from "../../types";
-import {addFigure} from "../../store/actionCreators";
+import {addFigure, removeFigure} from "../../store/actionCreators";
 import uniqid from 'uniqid';
 import {CONSTS} from "../../consts";
 
@@ -29,14 +29,17 @@ const Field = () => {
 
     const handleMouseUp = (e: MouseEvent) => {
         if (target) {
-            dispatch(addFigure({
-                id: uniqid(),
-                type: type,
-                position: {
-                    x: e.clientX - delta.x,
-                    y: e.clientY - delta.y
-                }
-            }));
+            if (e.clientX > CONSTS.MENU_WIDTH && e.clientX < window.innerWidth
+                && e.clientY > 0 && e.clientY < window.innerHeight) {
+                dispatch(addFigure({
+                    id: uniqid(),
+                    type: type,
+                    position: {
+                        x: e.clientX - delta.x,
+                        y: e.clientY - delta.y
+                    }
+                }));
+            }
             target.style.zIndex = `${CONSTS.DEFAULT_LAYER}`;
             target.style.left = '0';
             target.style.top = '0';
