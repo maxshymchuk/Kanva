@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import classnames from 'classnames';
 import styles from './field.module.scss';
 import {useDispatch, useSelector} from "react-redux";
@@ -12,7 +12,6 @@ import FileSaver from "file-saver";
 
 const Field = () => {
     const fileInput = useRef<HTMLInputElement>(null);
-    const [loadedJson, setLoadedJson] = useState('');
     let target: HTMLElement | null = null;
     let type: FigureType = FigureType.Square;
     let oldCoords = {
@@ -38,8 +37,8 @@ const Field = () => {
 
     const handleMouseUp = (e: MouseEvent) => {
         if (target) {
-            if (e.clientX > CONSTS.MENU_WIDTH && e.clientX < window.innerWidth
-                && e.clientY > 0 && e.clientY < window.innerHeight) {
+            if (e.clientX > CONSTS.MENU_WIDTH + delta.x && e.clientX < window.innerWidth - delta.x
+                && e.clientY > delta.y && e.clientY < window.innerHeight - delta.y) {
                 dispatch(addFigure({
                     id: uniqid(),
                     type: type,
