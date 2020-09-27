@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import classnames from 'classnames';
 import styles from './field.module.scss';
-import {useDispatch, useSelector} from "react-redux";
-import {Figure, FigureType} from "../../types";
-import {addFigure, AppState} from "../../store/actionCreators";
+import {useDispatch} from "react-redux";
+import {FigureType} from "../../types";
+import {addFigure} from "../../store/actionCreators";
 import uniqid from 'uniqid';
+import {CONSTS} from "../../consts";
 
 const Field = () => {
     let target: HTMLElement | null = null;
@@ -17,14 +18,6 @@ const Field = () => {
     }
 
     const dispatch = useDispatch();
-
-    const figures: Figure[] = useSelector(
-        (state: AppState) => state.figures
-    );
-
-    useEffect(() => {
-
-    }, [])
 
     const handleMouseMove = (e: MouseEvent) => {
         e.preventDefault();
@@ -44,22 +37,18 @@ const Field = () => {
                     y: e.clientY - delta.y
                 }
             }));
-            target.style.zIndex = '1';
-            target.style.left = '0px';
-            target.style.top = '0px';
+            target.style.zIndex = `${CONSTS.DEFAULT_LAYER}`;
+            target.style.left = '0';
+            target.style.top = '0';
         }
-        window.removeEventListener('mousemove', handleMouseMove, true);
-        window.removeEventListener('mouseup', handleMouseUp, true);
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('mouseup', handleMouseUp);
         target = null;
     }
 
     const handleMouseDown = (e: React.MouseEvent, figureType: FigureType) => {
-        window.addEventListener('mousemove', (e) => {
-            handleMouseMove(e)
-        }, true);
-        window.addEventListener('mouseup', (e) => {
-            handleMouseUp(e)
-        }, true);
+        window.addEventListener('mousemove', (e) => handleMouseMove(e));
+        window.addEventListener('mouseup', (e) => handleMouseUp(e));
         type = figureType;
         const item = e.target as HTMLDivElement;
         if (item) {
@@ -68,7 +57,7 @@ const Field = () => {
             oldCoords.y = e.clientY;
             delta.x = oldCoords.x - bounds.x;
             delta.y = oldCoords.y - bounds.y;
-            item.style.zIndex = '99';
+            item.style.zIndex = `${CONSTS.UPPER_LAYER}`;
             if (!target) target = item;
         }
     }
