@@ -4,8 +4,10 @@
   align-items: center;
   justify-content: space-between;
   min-width: 200px;
-  height: 100%;
-  background: #00000011;
+  background-color: #FFF;
+  padding: 40px 0;
+  border-right: 8px dashed #00000022;
+  box-sizing: border-box;
 }
 
 ul {
@@ -29,12 +31,15 @@ li {
   width: 100px;
   height: 100px;
   line-height: 100px;
-  background: red;
+  background-color: #CCCCCCCC;
+  box-shadow: 0 0 10px 0 #00000022;
   position: absolute;
   &.hidden {
     position: absolute;
-    background: green;
-    z-index: -1;
+    background-color: #00000008;
+    box-shadow: none;
+    border: none;
+    z-index: 0;
   }
 }
 
@@ -44,6 +49,8 @@ li {
 
 .controls {
   display: flex;
+  width: 100%;
+  justify-content: space-evenly;
   .export_button,
   .import_button {
     width: 30px;
