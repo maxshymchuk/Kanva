@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
     "classnames": "^2.2.6",
     "file-saver": "^2.0.2",
     "randomcolor": "^0.6.2",
@@ -18,11 +15,8 @@
     "uniqid": "^5.2.0"
   },
   "scripts": {
-    "start": "react-scripts build && serve -s build",
-    "dev": "set PORT=3001 && react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "react-scripts start",
+    "build": "react-scripts build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -43,6 +37,7 @@
     "@types/classnames": "^2.2.10",
     "@types/file-saver": "^2.0.1",
     "@types/randomcolor": "^0.5.5",
+    "@types/react-dom": "^16.9.8",
     "@types/react-redux": "^7.1.9",
     "@types/uniqid": "^5.2.0",
     "node-sass": "^4.14.1"
