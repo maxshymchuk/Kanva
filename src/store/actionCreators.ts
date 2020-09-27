@@ -19,19 +19,9 @@ export function removeFigure(id: string) {
     } as const;
 }
 
-export function moveFigure(id: string, x: number, y: number) {
-    return {
-        type: ActionTypes.MOVE_FIGURE,
-        payload: {
-            id, x, y
-        },
-    } as const;
-}
-
 type Actions =
     | ReturnType<typeof addFigure>
-    | ReturnType<typeof removeFigure>
-    | ReturnType<typeof moveFigure>;
+    | ReturnType<typeof removeFigure>;
 
 function fReducer(
     state: Figure[] = [],
@@ -44,19 +34,6 @@ function fReducer(
             return state.filter(
                 (figure) => figure.id !== action.payload
             );
-        case ActionTypes.MOVE_FIGURE: {
-            const newState = [...state];
-            newState.forEach((figure, i) => {
-                if (figure.id === action.payload.id) {
-                    figure.ref = {
-                        ...figure.ref,
-                        offsetLeft: action.payload.x,
-                        offsetTop: action.payload.y
-                    }
-                }
-            });
-            return newState;
-        }
     }
     return state;
 }

@@ -1,15 +1,18 @@
-import React, {createRef, useEffect, useRef, useState} from 'react';
+import React, {useEffect} from 'react';
 import classnames from 'classnames';
 import styles from './field.module.scss';
 import {useDispatch, useSelector} from "react-redux";
 import {Figure, FigureType} from "../../types";
-import {addFigure, AppState, moveFigure} from "../../store/actionCreators";
+import {addFigure, AppState} from "../../store/actionCreators";
 import uniqid from 'uniqid';
-import randomcolor from 'randomcolor';
 
 const Field = () => {
 
     let target: HTMLElement | null = null;
+    let type: FigureType = FigureType.Square;
+    let oldCoords = {
+        x: 0, y: 0
+    }
     let delta = {
         x: 0, y: 0
     }
@@ -24,40 +27,47 @@ const Field = () => {
         window.addEventListener('mousemove', (e) => {
             handleMouseMove(e)
         }, true);
-        window.addEventListener('mouseup', handleMouseUp, true);
+        window.addEventListener('mouseup', (e) => {
+            handleMouseUp(e)
+        }, true);
     }, [])
 
     const handleMouseMove = (e: MouseEvent) => {
         e.preventDefault();
         if (target) {
-            target.style.left = `${e.clientX - delta.x}px`;
-            target.style.top = `${e.clientY - delta.y}px`;
+            target.style.left = `${e.clientX - oldCoords.x}px`;
+            target.style.top = `${e.clientY - oldCoords.y}px`;
         }
-        //     dispatch(moveFigure(figure, e.clientX - 200, e.clientY));
     }
 
-    const handleMouseUp = () => {
+    const handleMouseUp = (e: MouseEvent) => {
         if (target) {
-            target.style.left = '0';
-            target.style.top = '0';
+            dispatch(addFigure({
+                id: uniqid(),
+                type: type,
+                position: {
+                    x: e.clientX - delta.x,
+                    y: e.clientY - delta.y
+                }
+            }));
+            target.style.zIndex = '0';
+            target.style.left = '0px';
+            target.style.top = '0px';
         }
         target = null;
     }
 
-    const handleMouseDown = (e: React.MouseEvent, type: FigureType) => {
-
+    const handleMouseDown = (e: React.MouseEvent, figureType: FigureType) => {
+        type = figureType;
         const item = e.target as HTMLDivElement;
-
         if (item) {
-            delta.x = e.clientX - item.offsetLeft;
-            delta.y = e.clientY - item.offsetTop;
+            const bounds = item.getBoundingClientRect();
+            oldCoords.x = e.clientX;
+            oldCoords.y = e.clientY;
+            delta.x = oldCoords.x - bounds.x;
+            delta.y = oldCoords.y - bounds.y;
             item.style.zIndex = '99';
-            // dispatch(addFigure({
-            //     id: uniqid(),
-            //     type: type,
-            //     ref: item
-            // }));
-            target = item;
+            if (!target) target = item;
         }
     }
 

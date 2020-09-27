@@ -4,15 +4,17 @@ export enum FigureType {
 }
 
 export type Figure = {
-    id: string;
+    id: string,
     type: FigureType;
-    ref: HTMLElement;
+    position: {
+        x: number,
+        y: number
+    }
 }
 
 export enum ActionTypes {
     ADD_FIGURE,
-    REMOVE_FIGURE,
-    MOVE_FIGURE
+    REMOVE_FIGURE
 }
 
 export type FigureState = {

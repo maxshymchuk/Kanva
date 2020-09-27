@@ -18,10 +18,8 @@ const Canvas = () => {
             {figures.map((figure) => {
                 const type = figure.type === FigureType.Square ? 'square' : 'circle';
                 const style = {
-                    backgroundColor: figure.ref.style.backgroundColor,
-                    zIndex: +figure.ref.style.zIndex,
-                    left: figure.ref.offsetLeft,
-                    top: figure.ref.offsetTop
+                    left: figure.position.x - 200,
+                    top: figure.position.y
                 }
                 return (
                     <div key={figure.id} className={classnames(styles.item, styles[type])} style={style}></div>
