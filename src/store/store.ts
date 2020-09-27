@@ -1,9 +1,5 @@
-import {ActionTypes, Figure} from "../types";
+import {Actions, ActionTypes, AppState, Figure} from "../types";
 import {combineReducers, createStore, Store} from "redux";
-
-export type AppState = {
-    figures: Figure[];
-};
 
 export function addFigure(figure: Figure) {
     return {
@@ -25,11 +21,6 @@ export function changeFigure(figure: Figure) {
         payload: figure,
     } as const;
 }
-
-type Actions =
-    | ReturnType<typeof addFigure>
-    | ReturnType<typeof removeFigure>
-    | ReturnType<typeof changeFigure>;
 
 function reducer(
     state: Figure[] = [],

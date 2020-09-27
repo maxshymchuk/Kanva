@@ -1,3 +1,5 @@
+@import 'src/styles/variables';
+
 .canvas {
   width: 100%;
   position: relative;
@@ -5,12 +7,11 @@
 
 .item {
   position: absolute;
-  width: 100px;
-  height: 100px;
-  background-color: blue;
+  width: $item-size;
+  height: $item-size;
   box-sizing: border-box;
   &:hover {
-    border: 2px solid #000;
+    border: $active-border;
   }
 }
 

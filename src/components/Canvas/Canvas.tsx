@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import styles from './canvas.module.scss';
 import {useDispatch, useSelector} from "react-redux";
-import {Figure, FigureType} from "../../types";
-import {AppState, changeFigure, removeFigure} from "../../store/store";
+import {AppState, Figure, FigureType} from "../../types";
+import {changeFigure, removeFigure} from "../../store/store";
 import classnames from 'classnames';
 import {CONSTS} from "../../consts";
 import {findFigure, getActive, getMaxLayer} from "../../utils";
@@ -42,7 +42,7 @@ const Canvas = () => {
                 top: figure.position.y,
                 zIndex: figure.layer,
                 backgroundColor: figure.color,
-                border: figure.isActive ? CONSTS.ACTIVE_BORDER : 'none'
+                border: figure.isActive ? CONSTS.ACTIVE_BORDER : ''
             }
             return (
                 <div
@@ -96,11 +96,13 @@ const Canvas = () => {
         const item = e.target as HTMLDivElement;
         item.style.zIndex = `${tempIndex}`;
         const figure = findFigure(figures, item.id);
-        figure.position = {
-            x: item.offsetLeft + CONSTS.MENU_WIDTH,
-            y: item.offsetTop
-        };
-        dispatch(changeFigure(figure));
+        if (figure) {
+            figure.position = {
+                x: item.offsetLeft + CONSTS.MENU_WIDTH,
+                y: item.offsetTop
+            };
+            dispatch(changeFigure(figure));
+        }
         if (target && (e.clientX < CONSTS.MENU_WIDTH || e.clientX > window.innerWidth
             || e.clientY < 0 || e.clientY > window.innerHeight)) {
             dispatch(removeFigure(target.id));

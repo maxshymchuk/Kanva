@@ -2,16 +2,13 @@ import React, {useRef} from 'react';
 import classnames from 'classnames';
 import styles from './field.module.scss';
 import {useDispatch, useSelector} from "react-redux";
-import {Figure, FigureType} from "../../types";
-import {addFigure, AppState, removeFigure} from "../../store/store";
+import {AppState, Figure, FigureType} from "../../types";
+import {addFigure, removeFigure} from "../../store/store";
 import uniqid from 'uniqid';
 import {CONSTS} from "../../consts";
 import randomcolor from 'randomcolor';
 import {getMaxLayer} from "../../utils";
 import FileSaver from "file-saver";
-import deleteImg from '../../assets/delete.svg';
-import importImg from '../../assets/import.svg';
-import exportImg from '../../assets/export.svg';
 
 const Field = () => {
     const fileInput = useRef<HTMLInputElement>(null);

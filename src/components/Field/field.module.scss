@@ -1,3 +1,5 @@
+@import 'src/styles/variables';
+
 .field {
   display: flex;
   flex-direction: column;
@@ -6,7 +8,7 @@
   min-width: 200px;
   background-color: #FFF;
   padding: 40px 0;
-  border-right: 8px dashed #00000022;
+  border-right: 8px dashed $accent-color;
   box-sizing: border-box;
 }
 
@@ -20,19 +22,19 @@ li {
 }
 
 .cell {
-  width: 100px;
-  height: 100px;
-  margin-bottom: 50px;
+  width: $item-size;
+  height: $item-size;
+  margin-bottom: $item-size / 2;
   position: relative;
 }
 
 .item {
   display: block;
-  width: 100px;
-  height: 100px;
-  line-height: 100px;
+  width: $item-size;
+  height: $item-size;
+  line-height: $item-size;
   background-color: #CCCCCCCC;
-  box-shadow: 0 0 10px 0 #00000022;
+  box-shadow: 0 0 10px 0 $accent-color;
   position: absolute;
   &.hidden {
     position: absolute;
@@ -60,7 +62,7 @@ li {
     border-radius: 50%;
     cursor: pointer;
     &:hover {
-      background-color: #00000011;
+      background-color: $accent-color;
     }
   }
   .clear_button {

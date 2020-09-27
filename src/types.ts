@@ -1,3 +1,14 @@
+import {addFigure, changeFigure, removeFigure} from "./store/store";
+
+export type AppState = {
+    figures: Figure[];
+};
+
+export type Actions =
+    | ReturnType<typeof addFigure>
+    | ReturnType<typeof removeFigure>
+    | ReturnType<typeof changeFigure>;
+
 export enum FigureType {
     Square,
     Circle
