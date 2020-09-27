@@ -44,8 +44,23 @@ li {
 
 .controls {
   display: flex;
-  .clear_button {
+  .export_button,
+  .import_button {
     width: 30px;
     height: 30px;
+    cursor: pointer;
   }
+  .clear_button {
+    width: 20px;
+    height: 20px;
+    padding: 5px;
+    cursor: pointer;
+  }
+  .import_label {
+    cursor: pointer;
+  }
+}
+
+.import_input {
+  display: none;
 }
