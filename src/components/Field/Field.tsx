@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {createRef, useEffect, useRef, useState} from 'react';
 import classnames from 'classnames';
 import styles from './field.module.scss';
 import {useDispatch, useSelector} from "react-redux";
@@ -10,6 +10,9 @@ import randomcolor from 'randomcolor';
 const Field = () => {
 
     let target: HTMLElement | null = null;
+    let delta = {
+        x: 0, y: 0
+    }
 
     const dispatch = useDispatch();
 
@@ -27,24 +30,35 @@ const Field = () => {
     const handleMouseMove = (e: MouseEvent) => {
         e.preventDefault();
         if (target) {
-            target.style.left = `${e.clientX}px`;
-            target.style.top = `${e.clientY}px`;
+            target.style.left = `${e.clientX - delta.x}px`;
+            target.style.top = `${e.clientY - delta.y}px`;
         }
         //     dispatch(moveFigure(figure, e.clientX - 200, e.clientY));
     }
 
     const handleMouseUp = () => {
+        if (target) {
+            target.style.left = '0';
+            target.style.top = '0';
+        }
         target = null;
     }
 
     const handleMouseDown = (e: React.MouseEvent, type: FigureType) => {
-        const item = e.target as HTMLElement;
-        item.style.zIndex = '99';
-        item.style.backgroundColor = `${randomcolor()}`;
-        item.id = uniqid();
 
-        // dispatch(addFigure(newFigure));
-        target = item;
+        const item = e.target as HTMLDivElement;
+
+        if (item) {
+            delta.x = e.clientX - item.offsetLeft;
+            delta.y = e.clientY - item.offsetTop;
+            item.style.zIndex = '99';
+            // dispatch(addFigure({
+            //     id: uniqid(),
+            //     type: type,
+            //     ref: item
+            // }));
+            target = item;
+        }
     }
 
     return (

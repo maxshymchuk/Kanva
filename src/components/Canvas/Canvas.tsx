@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import styles from './canvas.module.scss';
 import {useDispatch, useSelector} from "react-redux";
 import {Figure, FigureType} from "../../types";
@@ -18,8 +18,8 @@ const Canvas = () => {
             {figures.map((figure) => {
                 const type = figure.type === FigureType.Square ? 'square' : 'circle';
                 const style = {
-                    zIndex: figure.layer,
-                    backgroundColor: figure.color,
+                    backgroundColor: figure.ref.style.backgroundColor,
+                    zIndex: +figure.ref.style.zIndex,
                     left: figure.ref.offsetLeft,
                     top: figure.ref.offsetTop
                 }

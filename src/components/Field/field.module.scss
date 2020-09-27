@@ -17,6 +17,7 @@
   width: 100px;
   height: 100px;
   margin-bottom: 50px;
+  position: relative;
 }
 
 .item {
@@ -26,10 +27,11 @@
   text-align: center;
   line-height: 100px;
   background: red;
-  position: relative;
+  position: absolute;
   &.hidden {
     position: absolute;
     background: green;
+    z-index: -1;
   }
 }
 

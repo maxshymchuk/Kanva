@@ -6,8 +6,6 @@ export enum FigureType {
 export type Figure = {
     id: string;
     type: FigureType;
-    color: string;
-    layer: number;
     ref: HTMLElement;
 }
 
