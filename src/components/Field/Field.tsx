@@ -1,11 +1,13 @@
 import React from 'react';
 import classnames from 'classnames';
 import styles from './field.module.scss';
-import {useDispatch} from "react-redux";
-import {FigureType} from "../../types";
-import {addFigure, removeFigure} from "../../store/actionCreators";
+import {useDispatch, useSelector} from "react-redux";
+import {Figure, FigureType} from "../../types";
+import {addFigure, AppState} from "../../store/actionCreators";
 import uniqid from 'uniqid';
 import {CONSTS} from "../../consts";
+import randomcolor from 'randomcolor';
+import {getMaxLayer} from "../../utils";
 
 const Field = () => {
     let target: HTMLElement | null = null;
@@ -18,6 +20,10 @@ const Field = () => {
     }
 
     const dispatch = useDispatch();
+
+    const figures: Figure[] = useSelector(
+        (state: AppState) => state.figures
+    );
 
     const handleMouseMove = (e: MouseEvent) => {
         e.preventDefault();
@@ -37,7 +43,9 @@ const Field = () => {
                     position: {
                         x: e.clientX - delta.x,
                         y: e.clientY - delta.y
-                    }
+                    },
+                    layer: getMaxLayer(figures),
+                    color: randomcolor()
                 }));
             }
             target.style.zIndex = `${CONSTS.DEFAULT_LAYER}`;

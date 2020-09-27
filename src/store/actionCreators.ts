@@ -19,9 +19,17 @@ export function removeFigure(id: string) {
     } as const;
 }
 
+export function changeFigure(figure: Figure) {
+    return {
+        type: ActionTypes.CHANGE_FIGURE,
+        payload: figure,
+    } as const;
+}
+
 type Actions =
     | ReturnType<typeof addFigure>
-    | ReturnType<typeof removeFigure>;
+    | ReturnType<typeof removeFigure>
+    | ReturnType<typeof changeFigure>;
 
 function fReducer(
     state: Figure[] = [],
@@ -34,6 +42,15 @@ function fReducer(
             return state.filter(
                 (figure) => figure.id !== action.payload
             );
+        case ActionTypes.CHANGE_FIGURE: {
+            const newState = [...state];
+            newState.forEach((element, index) => {
+                if (element.id === action.payload.id) {
+                    state[index] = action.payload;
+                }
+            });
+            return newState;
+        }
     }
     return state;
 }
