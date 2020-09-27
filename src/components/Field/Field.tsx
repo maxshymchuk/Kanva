@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import classnames from 'classnames';
 import styles from './field.module.scss';
 import {useDispatch, useSelector} from "react-redux";
@@ -7,7 +7,6 @@ import {addFigure, AppState} from "../../store/actionCreators";
 import uniqid from 'uniqid';
 
 const Field = () => {
-
     let target: HTMLElement | null = null;
     let type: FigureType = FigureType.Square;
     let oldCoords = {
@@ -24,12 +23,7 @@ const Field = () => {
     );
 
     useEffect(() => {
-        window.addEventListener('mousemove', (e) => {
-            handleMouseMove(e)
-        }, true);
-        window.addEventListener('mouseup', (e) => {
-            handleMouseUp(e)
-        }, true);
+
     }, [])
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -50,14 +44,22 @@ const Field = () => {
                     y: e.clientY - delta.y
                 }
             }));
-            target.style.zIndex = '0';
+            target.style.zIndex = '1';
             target.style.left = '0px';
             target.style.top = '0px';
         }
+        window.removeEventListener('mousemove', handleMouseMove, true);
+        window.removeEventListener('mouseup', handleMouseUp, true);
         target = null;
     }
 
     const handleMouseDown = (e: React.MouseEvent, figureType: FigureType) => {
+        window.addEventListener('mousemove', (e) => {
+            handleMouseMove(e)
+        }, true);
+        window.addEventListener('mouseup', (e) => {
+            handleMouseUp(e)
+        }, true);
         type = figureType;
         const item = e.target as HTMLDivElement;
         if (item) {
