@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import styles from './field.module.scss';
 import {useDispatch, useSelector} from "react-redux";
 import {Figure, FigureType} from "../../types";
-import {addFigure, AppState, removeFigure} from "../../store/actionCreators";
+import {addFigure, AppState, removeFigure} from "../../store/store";
 import uniqid from 'uniqid';
 import {CONSTS} from "../../consts";
 import randomcolor from 'randomcolor';

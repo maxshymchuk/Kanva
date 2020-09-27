@@ -31,17 +31,21 @@ type Actions =
     | ReturnType<typeof removeFigure>
     | ReturnType<typeof changeFigure>;
 
-function fReducer(
+function reducer(
     state: Figure[] = [],
     action: Actions
 ) {
+    const storage = localStorage.getItem('figures');
+    let result = storage ? JSON.parse(storage) as Figure[] : [];
     switch (action.type) {
         case ActionTypes.ADD_FIGURE:
-            return state.concat(action.payload);
+            result = state.concat(action.payload);
+            break;
         case ActionTypes.REMOVE_FIGURE:
-            return state.filter(
+            result = state.filter(
                 (figure) => figure.id !== action.payload
             );
+            break;
         case ActionTypes.CHANGE_FIGURE: {
             const newState = [...state];
             newState.forEach((element, index) => {
@@ -49,20 +53,21 @@ function fReducer(
                     state[index] = action.payload;
                 }
             });
-            return newState;
+            result = newState;
+            break;
         }
     }
-    return state;
+    localStorage.setItem('figures', JSON.stringify(result));
+    return result;
 }
 
 const rootReducer = combineReducers<AppState>({
-    figures: fReducer
+    figures: reducer
 });
 
 export function configureStore(): Store<AppState> {
     const store = createStore(
-        rootReducer,
-        undefined
+        rootReducer, undefined
     );
     return store;
 }
