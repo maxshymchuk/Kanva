@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/Kanva/static/css/main.c7a5e9f4.chunk.css",
+    "main.js": "/Kanva/static/js/main.411ea0e7.chunk.js",
+    "main.js.map": "/Kanva/static/js/main.411ea0e7.chunk.js.map",
+    "runtime-main.js": "/Kanva/static/js/runtime-main.2c1a89ed.js",
+    "runtime-main.js.map": "/Kanva/static/js/runtime-main.2c1a89ed.js.map",
+    "static/js/2.78bcde1e.chunk.js": "/Kanva/static/js/2.78bcde1e.chunk.js",
+    "static/js/2.78bcde1e.chunk.js.map": "/Kanva/static/js/2.78bcde1e.chunk.js.map",
+    "index.html": "/Kanva/index.html",
+    "precache-manifest.b342af32dc49fd8fb5e379c64fc43ea1.js": "/Kanva/precache-manifest.b342af32dc49fd8fb5e379c64fc43ea1.js",
+    "service-worker.js": "/Kanva/service-worker.js",
+    "static/css/main.c7a5e9f4.chunk.css.map": "/Kanva/static/css/main.c7a5e9f4.chunk.css.map",
+    "static/js/2.78bcde1e.chunk.js.LICENSE.txt": "/Kanva/static/js/2.78bcde1e.chunk.js.LICENSE.txt",
+    "static/media/field.module.scss": "/Kanva/static/media/import.715ec00e.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.2c1a89ed.js",
+    "static/js/2.78bcde1e.chunk.js",
+    "static/css/main.c7a5e9f4.chunk.css",
+    "static/js/main.411ea0e7.chunk.js"
+  ]
+}
